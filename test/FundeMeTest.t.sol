@@ -4,7 +4,7 @@ pragma solidity ^0.8.18;
 import {Test} from "forge-std/Test.sol";
 import {console} from "forge-std/console.sol";
 import {FundMe} from "../src/fundeMe.sol";
-import {MockV3Aggregator} from "../lib/chainlink-brownie-contracts/contracts/src/v0.8/tests/MockV3Aggregator.sol";
+import {MockV3Aggregator} from "./mock/MockV3Aggregator.sol";
 
 contract FundeMeTest is Test{
 

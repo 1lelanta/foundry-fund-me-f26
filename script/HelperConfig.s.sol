@@ -30,10 +30,9 @@ contract HelperConfig is Script{
         return sepoliaConfig;
     }
 
-    function getAnvilEthConfig(NewtorkConfig memory) public pure{
+    function getAnvilEthConfig(NewtorkConfig memory) public pure returns(NewtorkConfig memory){
         vm.startBroadcast();
 
         vm.stopBroadcast();
-
     }
 }
