@@ -12,6 +12,15 @@ contract HelperConfig is Script{
         address priceFeed;
     }
 
+    constructor(){
+        if(block.chainid == 11155111){
+            activeNetworkConfig = getSepoliaEthConfig();
+        }
+        else{
+            activeNetworkConfig = getAnvilEthConfig();
+        }
+    }
+
 // pure keyword indicates that the function does not read or modify the state of the contract.
 // think of it as a function only performing calculations based on its input paramers always the input gives the same output
     function getSepoliaEthConfig(NewtorkConfig memory) public pure returns(NewtorkConfig memory){
