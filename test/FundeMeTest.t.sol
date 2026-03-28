@@ -4,12 +4,19 @@ pragma solidity ^0.8.18;
 import {Test} from "forge-std/Test.sol";
 import {console} from "forge-std/console.sol";
 import {FundMe} from "../src/fundeMe.sol";
+import {MockV3Aggregator} from "../lib/chainlink-brownie-contracts/contracts/src/v0.8/tests/MockV3Aggregator.sol";
 
 contract FundeMeTest is Test{
 
     FundMe fundme;
+        MockV3Aggregator mockPriceFeed;
+
+        uint8 private constant DECIMALS = 8;
+        int256 private constant INITIAL_PRICE = 2000e8;
+
     function setUp() external{ 
-      fundme  = new FundMe();
+            mockPriceFeed = new MockV3Aggregator(DECIMALS, INITIAL_PRICE);
+            fundme  = new FundMe(address(mockPriceFeed));
 
     }
 
@@ -24,7 +31,7 @@ contract FundeMeTest is Test{
     function testPriceFeedVersionIsAccurate() public {
         uint256 version = fundme.getVersion();
         console.log(version);
-        assertEq(version, 4);
+        assertEq(version, 0);
         
     }
 
