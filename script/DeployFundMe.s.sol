@@ -10,10 +10,10 @@ contract DeployFundMe is Script{
     
 
     function run() external{
-        HelperConfig HelperConfig = new HelperConfig();
-        address ethUsdPriceFeed = HelperConfig.activeNetworkConfig();
+        HelperConfig helperConfig = new HelperConfig();
+        (address ethUsdPriceFeed) = helperConfig.activeNetworkConfig();
         vm.startBroadcast();
-        FundMe fundme = new FundMe(SEPOLIA_PRICE_FEED);
+        FundMe fundme = new FundMe(ethUsdPriceFeed);
         vm.stopBroadcast();
     }
 }
