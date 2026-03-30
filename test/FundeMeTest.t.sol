@@ -2,7 +2,7 @@
 pragma solidity ^0.8.18;
 
 import {Test} from "forge-std/Test.sol";
-import {FundMe} from "../src/fundeMe.sol";
+import {FundMe, NotOwner} from "../src/fundeMe.sol";
 import {MockV3Aggregator} from "./mock/MockV3Aggregator.sol";
 
 contract FundeMeTest is Test{
