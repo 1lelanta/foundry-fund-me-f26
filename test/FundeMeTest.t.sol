@@ -15,11 +15,15 @@ contract FundeMeTest is Test{
     uint256 private constant SEND_VALUE = 0.1 ether;
     uint256 private constant STARTING_BALANCE = 10 ether;
     address private constant USER = address(1);
+    address private OWNER;
 
     function setUp() external {
         mockPriceFeed = new MockV3Aggregator(DECIMALS, INITIAL_PRICE);
+        OWNER = makeAddr("owner");
+        vm.prank(OWNER);
         fundme = new FundMe(address(mockPriceFeed));
         vm.deal(USER, STARTING_BALANCE);
+        vm.deal(OWNER, STARTING_BALANCE);
     }
 
     function testMinimumDollarIsFive() public view {
@@ -27,7 +31,7 @@ contract FundeMeTest is Test{
     }
 
     function testMsgSenderIsOwner() public view {
-        assertEq(fundme.i_owner(), address(this));
+        assertEq(fundme.i_owner(), OWNER);
     }
 
     function testPriceFeedVersionIsAccurate() public view {
@@ -69,13 +73,13 @@ contract FundeMeTest is Test{
     }
 
     function testWithdrawWithASingleFunder() public funded {
-        uint256 startingOwnerBalance = fundme.i_owner().balance;
+        uint256 startingOwnerBalance = OWNER.balance;
         uint256 startingFundMeBalance = address(fundme).balance;
 
-        vm.prank(fundme.i_owner());
+        vm.prank(OWNER);
         fundme.withdraw();
 
-        uint256 endingOwnerBalance = fundme.i_owner().balance;
+        uint256 endingOwnerBalance = OWNER.balance;
         uint256 endingFundMeBalance = address(fundme).balance;
 
         assertEq(endingFundMeBalance, 0);
@@ -89,14 +93,14 @@ contract FundeMeTest is Test{
             fundme.fund{value: SEND_VALUE}();
         }
 
-        uint256 startingOwnerBalance = fundme.i_owner().balance;
+        uint256 startingOwnerBalance = OWNER.balance;
         uint256 startingFundMeBalance = address(fundme).balance;
 
-        vm.prank(fundme.i_owner());
+        vm.prank(OWNER);
         fundme.withdraw();
 
         assertEq(address(fundme).balance, 0);
-        assertEq(fundme.i_owner().balance, startingOwnerBalance + startingFundMeBalance);
+        assertEq(OWNER.balance, startingOwnerBalance + startingFundMeBalance);
     }
 
 }
