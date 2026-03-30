@@ -35,7 +35,7 @@ contract FundeMeTest is Test{
         
     }
 
-    function testFundFailWithoutEnoughEth() {
+    function testFundFailWithoutEnoughEth() public {
         vm.expectRevert();
         fundme.fund();
         
