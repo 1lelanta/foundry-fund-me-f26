@@ -35,5 +35,11 @@ contract FundeMeTest is Test{
         
     }
 
+    function testFundFailWithoutEnoughEth() {
+        vm.expectRevert();
+        fundme.fund();
+        
+    }
+
 
 }
