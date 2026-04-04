@@ -8,17 +8,14 @@ import{Script} from "forge-std/Script.sol";
 import {DevOpsTools} from "devops-tools/DevOpsTools.sol";
 import {FundMe} from "../src/fundeMe.sol";
 
-contract FundFundMe is Script{
-
-    function FundFundMe(address mostRecentlyDeployed) public{
-        vm.startBroadcast();
-        FundMe(mostRecentlyDeployed)
-
-    }
-
+contract FundMe is Script {
     function run() external{
-        address mostRecentlyDeployed= DevOpsTools.get_most_recent_deployment("FundMe",block.chainid);
+        
     }
+
+}
+
+contract withdraw is Script{
 
 }
 
